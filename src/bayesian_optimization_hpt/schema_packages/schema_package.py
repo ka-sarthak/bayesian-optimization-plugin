@@ -43,7 +43,7 @@ class PassivationPerformanceResult(MeasurementResult):
     carrier_lifetime = Quantity(
         type=float,
         description='The average time taken for a carrier to recombine.',
-        a_eln={'component': 'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'microsecond'},
         a_tabular={'name': 'Carrier lifetime [um]'},
         unit='microsecond',
     )
@@ -58,28 +58,28 @@ class HydrogenPlasmaTreatment(ActivityStep):
     temperature = Quantity(
         type=float,
         description='Process temperature.',
-        a_eln={'component': 'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'K'},
         a_tabular={'name': 'Process temperature [K]'},
         unit='kelvin',
     )
     duration = Quantity(
         type=float,
         description='Process duration.',
-        a_eln={'component': 'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'minute'},
         a_tabular={'name': 'Process time [min]'},
         unit='minute',
     )
     h2_pressure = Quantity(
         type=float,
         description='Hydrogen gas pressure.',
-        a_eln={'component': 'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'Pa'},
         a_tabular={'name': 'H2 pressure [Pa]'},
         unit='Pa',
     )
     h2_flow_rate = Quantity(
         type=float,
         description='Hydrogen gas flow rate.',
-        a_eln={'component': 'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'cm**3/minute'},
         a_tabular={'name': 'H2 flow rate [sccm]'},
         unit='cm**3/minute',
     )
@@ -88,14 +88,17 @@ class HydrogenPlasmaTreatment(ActivityStep):
         description="""
         RF (radio frequency) power supplied to generate and sustain plasma.
         """,
-        a_eln={'component': 'NumberEditQuantity'},
+        a_eln={'component': 'NumberEditQuantity', 'defaultDisplayUnit': 'W'},
         a_tabular={'name': 'RF power [W]'},
         unit='W',
     )
     electrode_distance = Quantity(
         type=float,
         description='Distance between electrodes.',
-        a_eln={'component': 'NumberEditQuantity'},
+        a_eln={
+            'component': 'NumberEditQuantity',
+            'defaultDisplayUnit': 'millimeter',
+        },
         a_tabular={'name': 'Electrod distance [mm]'},
         unit='millimeter',
     )
