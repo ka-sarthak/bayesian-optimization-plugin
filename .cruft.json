@@ -1,0 +1,27 @@
+{
+  "template": "https://github.com/FAIRmat-NFDI/cookiecutter-nomad-plugin",
+  "commit": "e759475d3f8905df4354ca83d8ce6cd632ffce99",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "full_name": "Sarthak Kapoor",
+      "email": "sarthak.kapoor@physik.hu-berlin.de",
+      "github_username": "ka-sarthak",
+      "plugin_name": "bayesian-optimization-hpt",
+      "module_name": "bayesian_optimization_hpt",
+      "short_description": "A plugin to conduct BO for Hydrogen plasma treatment",
+      "version": "0.1.0",
+      "license": "Apache Software License 2.0",
+      "include_schema_package": true,
+      "include_normalizer": false,
+      "include_parser": false,
+      "include_app": true,
+      "include_example_uploads": true,
+      "_copy_without_render": [
+        "*.html"
+      ],
+      "_template": "https://github.com/FAIRmat-NFDI/cookiecutter-nomad-plugin"
+    }
+  },
+  "directory": null
+}
