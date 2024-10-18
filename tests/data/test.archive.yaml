@@ -1,3 +1,2 @@
 data:
-  m_def: bayesian_optimization_hpt.schema_packages.schema_package.NewSchemaPackage
-  name: Markus
+  m_def: bayesian_optimization_hpt.schema_packages.schema_package.BayesianOptimizationHPT

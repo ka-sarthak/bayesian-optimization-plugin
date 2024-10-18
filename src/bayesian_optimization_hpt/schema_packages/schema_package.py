@@ -136,7 +136,7 @@ class PassivationPerformanceMeasurement(Measurement, EntryData):
 
 
 class PassivationPerformanceMeasurementReference(SectionReference):
-    reference = SectionReference.reference.m_def
+    reference = SectionReference.reference
     reference.type = PassivationPerformanceMeasurement
 
 
@@ -262,6 +262,9 @@ class BayesianOptimizationHPT(ELNJupyterAnalysis):
             ),
         )
     )
+    analysis_type = ELNJupyterAnalysis.analysis_type
+    analysis_type.default = 'Bayesian Optimization'
+
     surrogate_model = Quantity(
         type=str,
         description='The path of the surrogate model used for the optimization.',
