@@ -3,14 +3,6 @@ from typing import (
 )
 
 from nomad.config import config
-from nomad.metainfo import SchemaPackage
-
-configuration = config.get_plugin_entry_point(
-    'bayesian_optimization_hpt.schema_packages:schema_package_entry_point'
-)
-
-m_package = SchemaPackage()
-
 from nomad.datamodel.data import (
     ArchiveSection,
     EntryData,
@@ -27,8 +19,8 @@ from nomad.datamodel.metainfo.basesections import (
     SectionReference,
 )
 from nomad.metainfo import (
-    Package,
     Quantity,
+    SchemaPackage,
     Section,
     SubSection,
 )
@@ -39,7 +31,11 @@ from nomad_analysis.jupyter.schema import ELNJupyterAnalysis
 if TYPE_CHECKING:
     pass
 
-m_package = Package(name='HPT data loader and schemas')
+configuration = config.get_plugin_entry_point(
+    'bayesian_optimization_hpt.schema_packages:schema_package_entry_point'
+)
+
+m_package = SchemaPackage()
 
 
 class PassivationPerformanceResult(MeasurementResult):
