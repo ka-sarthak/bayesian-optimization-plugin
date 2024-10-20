@@ -306,7 +306,6 @@ class BayesianOptimizationHPT(ELNJupyterAnalysis):
     analysis_type.default = 'Bayesian Optimization'
 
     surrogate_model = SubSection(section_def=SurrogateModel)
-    optimized_parameters = SubSection(section_def=HydrogenPlasmaTreatment)
     steps = SubSection(section_def=AnalysisStep, repeats=True)
 
     def normalize(self, archive, logger):
@@ -320,7 +319,7 @@ class BayesianOptimizationHPT(ELNJupyterAnalysis):
                     current_optimized_params = step
                     self.surrogate_model.trained_on.append(step.sample)
             if current_optimized_params:
-                self.optimized_parameters = current_optimized_params.proposal
+                self.outputs = [current_optimized_params.sample]
         super().normalize(archive, logger)
 
 
