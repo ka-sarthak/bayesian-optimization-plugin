@@ -178,11 +178,13 @@ class HPTDataLoader(EntryData, TableData):
 class InitialSampling(AnalysisStep):
     """
     Initial sampling of the data for the Bayesian optimization.
+    It contains the samples used for initial training of the surrogate model.
     """
 
     samples = SubSection(
         section_def=PassivationPerformanceMeasurementReference,
         description='The input sections for the analysis',
+        repeats=True,
     )
 
 
