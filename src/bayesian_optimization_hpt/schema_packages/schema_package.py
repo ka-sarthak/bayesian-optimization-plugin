@@ -310,17 +310,17 @@ class BayesianOptimizationHPT(ELNJupyterAnalysis):
     steps = SubSection(section_def=AnalysisStep, repeats=True)
 
     def normalize(self, archive, logger):
-        self.surrogate_model.trained_on = []
-        self.inputs = []
-        current_optimized_params = None
-        for step in self.steps:
-            if isinstance(step, InitialSampling):
-                self.surrogate_model.trained_on.extend(step.samples)
-            elif isinstance(step, Acquisition):
-                current_optimized_params = step
-                self.surrogate_model.trained_on.append(step.sample)
-        if current_optimized_params:
-            self.optimized_parameters = current_optimized_params.proposal
+        if self.surrogate_model:
+            self.surrogate_model.trained_on = []
+            current_optimized_params = None
+            for step in self.steps:
+                if isinstance(step, InitialSampling):
+                    self.surrogate_model.trained_on.extend(step.samples)
+                elif isinstance(step, Acquisition):
+                    current_optimized_params = step
+                    self.surrogate_model.trained_on.append(step.sample)
+            if current_optimized_params:
+                self.optimized_parameters = current_optimized_params.proposal
         super().normalize(archive, logger)
 
 
