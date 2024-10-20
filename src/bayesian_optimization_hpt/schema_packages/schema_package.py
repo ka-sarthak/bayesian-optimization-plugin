@@ -19,6 +19,7 @@ from nomad.datamodel.metainfo.basesections import (
     SectionReference,
 )
 from nomad.metainfo import (
+    MEnum,
     Quantity,
     SchemaPackage,
     Section,
@@ -234,6 +235,38 @@ class Acquisition(AnalysisStep):
     )
 
 
+class SurrogateModel(ArchiveSection):
+    """
+    Surrogate model for the Bayesian optimization.
+    """
+
+    name = Quantity(
+        type=str,
+        description='The name of the surrogate model.',
+        a_eln={'component': 'StringEditQuantity'},
+    )
+    model_type = Quantity(
+        type=MEnum('Gaussian Process'),
+        description='The type of the surrogate model taken from sklearn library.',
+        a_eln={'component': 'EnumEditQuantity'},
+    )
+    model_path = Quantity(
+        type=str,
+        description="""
+        Path of the serialized surrogate model taken from sklearn library.
+        """,
+    )
+    description = Quantity(
+        type=str,
+        description='The description of the surrogate model.',
+        a_eln={'component': 'RichTextEditQuantity'},
+    )
+    trained_on = SubSection(
+        section_def=PassivationPerformanceMeasurementReference,
+        repeats=True,
+    )
+
+
 class BayesianOptimizationHPT(ELNJupyterAnalysis):
     """
     Bayesian optimization for the hydrogen plasma treatment.
@@ -261,23 +294,17 @@ class BayesianOptimizationHPT(ELNJupyterAnalysis):
     analysis_type = ELNJupyterAnalysis.analysis_type
     analysis_type.default = 'Bayesian Optimization'
 
-    surrogate_model = Quantity(
-        type=str,
-        description='The path of the surrogate model used for the optimization.',
-        a_eln={'component': 'FileEditQuantity'},
-    )
-    steps = SubSection(
-        section_def=AnalysisStep,
-        repeats=True,
-    )
+    surrogate_model = SubSection(section_def=SurrogateModel)
+    steps = SubSection(section_def=AnalysisStep, repeats=True)
 
     def normalize(self, archive, logger):
+        self.surrogate_model.trained_on = []
         self.inputs = []
         for step in self.steps:
             if isinstance(step, InitialSampling):
-                self.inputs.extend(step.samples)
+                self.surrogate_model.trained_on.extend(step.samples)
             elif isinstance(step, Acquisition):
-                self.inputs.append(step.sample)
+                self.surrogate_model.trained_on.append(step.sample)
         super().normalize(archive, logger)
 
 
