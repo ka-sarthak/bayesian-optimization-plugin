@@ -146,6 +146,11 @@ class PassivationPerformanceMeasurementReference(SectionReference):
     reference = SectionReference.reference
     reference.type = PassivationPerformanceMeasurement
 
+    def normalize(self, archive, logger):
+        if self.reference and self.reference.name:
+            self.name = self.reference.name
+        super().normalize(archive, logger)
+
 
 class HydrogenPlasmaTreatments(ArchiveSection):
     """
@@ -320,6 +325,9 @@ class BayesianOptimizationHPT(ELNJupyterAnalysis):
                     self.surrogate_model.trained_on.append(step.sample)
             if current_optimized_params:
                 self.outputs = [current_optimized_params.sample]
+            if self.surrogate_model.trained_on:
+                self.inputs.append(self.surrogate_model.trained_on)
+                self.inputs = list(set(self.inputs))
         super().normalize(archive, logger)
 
 
