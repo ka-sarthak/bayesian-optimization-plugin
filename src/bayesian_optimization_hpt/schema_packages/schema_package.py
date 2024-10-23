@@ -291,7 +291,7 @@ class BayesianOptimizationHPT(ELNJupyterAnalysis):
     m_def = Section(
         a_eln=ELNAnnotation(
             properties=SectionProperties(
-                visible=Filter(exclude=['input_entry_class', 'query_for_inputs']),
+                visible=Filter(exclude=['input_entry_class']),
                 order=[
                     'name',
                     'datetime',
