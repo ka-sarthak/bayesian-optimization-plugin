@@ -314,20 +314,23 @@ class BayesianOptimizationHPT(ELNJupyterAnalysis):
 
     def normalize(self, archive, logger):
         self.method = 'Bayesian Optimization'
-        if self.surrogate_model:
-            self.surrogate_model.trained_on = []
-            current_optimized_params = None
-            for step in self.steps:
-                if isinstance(step, InitialSampling):
-                    self.surrogate_model.trained_on.extend(step.samples)
-                elif isinstance(step, Acquisition):
-                    current_optimized_params = step
-                    self.surrogate_model.trained_on.append(step.sample)
-            if current_optimized_params:
-                self.outputs = [current_optimized_params.sample]
-            if self.surrogate_model.trained_on:
-                self.inputs.append(self.surrogate_model.trained_on)
-                self.inputs = list(set(self.inputs))
+        if not self.surrogate_model:
+            self.surrogate_model = SurrogateModel(
+                name='BO Model', model_type='Gaussian Process'
+            )
+        self.surrogate_model.trained_on = []
+        current_optimized_params = None
+        for step in self.steps:
+            if isinstance(step, InitialSampling):
+                self.surrogate_model.trained_on.extend(step.samples)
+            elif isinstance(step, Acquisition):
+                current_optimized_params = step
+                self.surrogate_model.trained_on.append(step.sample)
+        if current_optimized_params:
+            self.outputs = [current_optimized_params.sample]
+        if self.surrogate_model.trained_on:
+            self.inputs.extend(self.surrogate_model.trained_on)
+
         super().normalize(archive, logger)
 
 
