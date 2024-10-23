@@ -143,7 +143,7 @@ class PassivationPerformanceMeasurement(Measurement, EntryData):
 
 
 class PassivationPerformanceMeasurementReference(SectionReference):
-    reference = SectionReference.reference
+    reference = SectionReference.reference.m_def
     reference.type = PassivationPerformanceMeasurement
 
     def normalize(self, archive, logger):
@@ -308,13 +308,12 @@ class BayesianOptimizationHPT(ELNJupyterAnalysis):
             ),
         )
     )
-    method = ELNJupyterAnalysis.method
-    method.default = 'Bayesian Optimization'
 
     surrogate_model = SubSection(section_def=SurrogateModel)
     steps = SubSection(section_def=AnalysisStep, repeats=True)
 
     def normalize(self, archive, logger):
+        self.method = 'Bayesian Optimization'
         if self.surrogate_model:
             self.surrogate_model.trained_on = []
             current_optimized_params = None
