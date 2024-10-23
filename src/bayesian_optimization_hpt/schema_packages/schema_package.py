@@ -302,13 +302,14 @@ class BayesianOptimizationHPT(ELNJupyterAnalysis):
                     'query_for_inputs',
                     'description',
                     'analysis_type',
+                    'method',
                     'surrogate_model',
                 ],
             ),
         )
     )
-    analysis_type = ELNJupyterAnalysis.analysis_type
-    analysis_type.default = 'Bayesian Optimization'
+    method = ELNJupyterAnalysis.method
+    method.default = 'Bayesian Optimization'
 
     surrogate_model = SubSection(section_def=SurrogateModel)
     steps = SubSection(section_def=AnalysisStep, repeats=True)
