@@ -2,7 +2,7 @@
   "data": {
     "m_def": "bayesian_optimization_hpt.schema_packages.schema_package.BayesianOptimizationHPT",
     "name": "analysis",
-    "notebook": "analysis_bayesian optimization_notebook.ipynb",
+    "notebook": "analysis_generic_notebook.ipynb",
     "reset_notebook": true
   }
 }
